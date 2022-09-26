@@ -1,0 +1,10 @@
+#!/usr/bin/env expect
+
+set timeout -1
+spawn openarena +timedemo 1 +cg_drawfps 1 +demo demo088-test1.dm_71
+expect "frames"
+exec killall -9 quake3
+wait
+sleep 1
+# Avoid error dialog on next run
+exec rm /tmp/ioq3.pid
