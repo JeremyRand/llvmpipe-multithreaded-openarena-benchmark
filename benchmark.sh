@@ -10,6 +10,7 @@ echo "Benchmarks should take around 4 hours to run, be patient!"
 echo ""
 
 lscpu | grep "^CPU(s):"
+glxinfo | grep -i "OpenGL version"
 openarena +timedemo 1 +cg_drawfps 1 +quit 2>&1 | grep 'MODE'
 echo ""
 

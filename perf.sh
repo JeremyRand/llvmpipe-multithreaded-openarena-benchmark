@@ -7,6 +7,7 @@ export GALLIUM_DRIVER=llvmpipe
 rm -f /tmp/ioq3.pid
 
 lscpu | grep "^CPU(s):"
+glxinfo | grep -i "OpenGL version"
 openarena +timedemo 1 +cg_drawfps 1 +quit 2>&1 | grep 'MODE'
 echo ""
 
