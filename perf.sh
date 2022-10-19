@@ -15,6 +15,9 @@ echo "Frames  TotalTime  averageFPS  minimum/average/maximum/std deviation"
 echo ""
 
 for I in {1..5} ; do
+    # Avoid error dialog if OpenArena was force-closed previously.
+    rm -f /tmp/ioq3.pid
+
     perf record -o perf.data."$I" openarena +timedemo 1 +cg_drawfps 1 +demo demo088-test1.dm_71 +set nextdemo quit 2>&1 | grep 'frames'
     sleep 1s
 done
