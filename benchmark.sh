@@ -14,6 +14,9 @@ glxinfo | grep -i "OpenGL version"
 openarena +timedemo 1 +cg_drawfps 1 +quit 2>&1 | grep 'MODE'
 echo ""
 
+# Work around "HUNK_ALLOC FAILED" error with default OpenArena settings
+sed -i 's/seta com_hunkMegs "[0-9]*"/seta com_hunkMegs "256"/' ~/.openarena/baseoa/q3config.cfg
+
 echo "Frames  TotalTime  averageFPS  minimum/average/maximum/std deviation"
 echo ""
 
