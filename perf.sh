@@ -8,8 +8,16 @@ rm -f /tmp/ioq3.pid
 
 lscpu | grep "^CPU(s):"
 glxinfo | grep -i "OpenGL version"
+glxgears > /dev/null &
+sleep 5s
+echo "LP_MAX_THREADS: $(ps H -o 'tid comm' $(ps -e | grep glxgears | cut -f 1 -d ' ') | grep -i llvmpipe | wc -l)"
+killall glxgears
+sleep 5s
 openarena +timedemo 1 +cg_drawfps 1 +quit 2>&1 | grep 'MODE'
 echo ""
+
+# Work around "HUNK_ALLOC FAILED" error with default OpenArena settings
+sed -i 's/seta com_hunkMegs "[0-9]*"/seta com_hunkMegs "256"/' ~/.openarena/baseoa/q3config.cfg
 
 echo "Frames  TotalTime  averageFPS  minimum/average/maximum/std deviation"
 echo ""
