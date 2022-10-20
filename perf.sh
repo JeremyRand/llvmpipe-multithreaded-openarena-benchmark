@@ -7,6 +7,8 @@ export GALLIUM_DRIVER=llvmpipe
 rm -f /tmp/ioq3.pid
 
 lscpu | grep "^CPU(s):"
+echo "Memory:"
+lshw -class memory | grep "          size" || exit -1
 glxinfo | grep -i "OpenGL version"
 glxgears > /dev/null &
 sleep 5s

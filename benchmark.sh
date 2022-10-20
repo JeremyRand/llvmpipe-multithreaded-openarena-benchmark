@@ -10,6 +10,8 @@ echo "Benchmarks should take around 4 hours to run, be patient!"
 echo ""
 
 lscpu | grep "^CPU(s):"
+echo "Memory:"
+lshw -class memory | grep "          size" || exit -1
 glxinfo | grep -i "OpenGL version"
 glxgears > /dev/null &
 sleep 5s
