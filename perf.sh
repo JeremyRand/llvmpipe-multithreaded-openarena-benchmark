@@ -31,3 +31,10 @@ for I in {1..5} ; do
     perf record -o perf.data."$I" openarena +timedemo 1 +cg_drawfps 1 +demo demo088-test1.dm_71 +set nextdemo quit 2>&1 | grep 'frames'
     sleep 1s
 done
+
+for I in {1..5} ; do
+    echo "Generating perf report $I..."
+    perf report -i perf.data."$I" | grep -v ' 0\.00%' > perf.report."$I".txt
+done
+
+echo "Your perf reports have been generated."
