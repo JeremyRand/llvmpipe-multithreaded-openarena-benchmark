@@ -28,7 +28,8 @@ echo "Frames  TotalTime  averageFPS  minimum/average/maximum/std deviation"
 echo ""
 
 # All publicly documented Sforza core counts, in single and double CPU configurations.
-for THREADS in 16 32 48 64 72 80 88 96 128 144 160 176 ; do
+# Also test 8 threads (not a Sforza core count) for comparison purposes.
+for THREADS in 8 16 32 48 64 72 80 88 96 128 144 160 176 ; do
     echo "$THREADS Threads:"
     export LP_NUM_THREADS="$THREADS"
     for I in {1..5} ; do
