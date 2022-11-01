@@ -20,14 +20,27 @@ killall glxgears
 sleep 5s
 echo ""
 
+if [ ! -f "./control/swrast_dri.so" ]; then
+    echo "Copy control swrast_dri.so into ./control/ and try again!"
+    exit -1
+fi
+
+if [ ! -f "./experimental/swrast_dri.so" ]; then
+    echo "Copy experimental swrast_dri.so into ./experimental/ and try again!"
+    exit -1
+fi
+
 # All publicly documented Sforza core counts, in single and double CPU configurations.
 # Also test 8 threads (not a Sforza core count) for comparison purposes.
 for THREADS in 8 16 32 48 64 72 80 88 96 128 144 160 176 ; do
     echo "$THREADS Threads:"
     export LP_NUM_THREADS="$THREADS"
     for I in {1..5} ; do
-        apitrace replay --benchmark --headless openarena.trace 2>&1 | grep 'fps'
-        sleep 1s
+        for LLVMPIPE_DIR in "control" "experimental" ; do
+            echo -n "$LLVMPIPE_DIR "
+            LIBGL_DRIVERS_PATH="$(pwd)/$LLVMPIPE_DIR" apitrace replay --benchmark --headless openarena.trace 2>&1 | grep 'fps'
+            sleep 1s
+        done
     done
     echo ""
 done
